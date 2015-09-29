@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>487</width>
-    <height>304</height>
+    <width>556</width>
+    <height>313</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -80,27 +80,27 @@
    <property name="frameShadow">
     <enum>QFrame::Raised</enum>
    </property>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="lineEdit_in_myframe">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
-      <width>113</width>
+      <x>20</x>
+      <y>10</y>
+      <width>91</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="lineEdit_2_in_myframe">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>113</width>
+      <x>20</x>
+      <y>40</y>
+      <width>91</width>
       <height>20</height>
      </rect>
     </property>
    </widget>
-   <widget class="QSpinBox" name="spinBox">
+   <widget class="QSpinBox" name="spinBox_in_myframe">
     <property name="geometry">
      <rect>
       <x>130</x>
@@ -110,7 +110,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QDoubleSpinBox" name="doubleSpinBox">
+   <widget class="QDoubleSpinBox" name="doubleSpinBox_in_myframe">
     <property name="geometry">
      <rect>
       <x>120</x>
@@ -126,7 +126,7 @@
     <rect>
      <x>230</x>
      <y>90</y>
-     <width>69</width>
+     <width>41</width>
      <height>22</height>
     </rect>
    </property>
@@ -144,9 +144,9 @@
   <widget class="QDateTimeEdit" name="dateTimeEdit">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>200</x>
      <y>150</y>
-     <width>194</width>
+     <width>111</width>
      <height>22</height>
     </rect>
    </property>
@@ -164,9 +164,9 @@
   <widget class="QDateEdit" name="dateEdit">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>150</y>
-     <width>110</width>
+     <x>280</x>
+     <y>90</y>
+     <width>71</width>
      <height>22</height>
     </rect>
    </property>
@@ -181,78 +181,181 @@
     </rect>
    </property>
   </widget>
-  <widget class="QWidget" name="verticalLayoutWidget">
+  <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>10</y>
-     <width>111</width>
-     <height>111</height>
+     <x>30</x>
+     <y>140</y>
+     <width>153</width>
+     <height>52</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="Layout">
+   <property name="title">
+    <string>GroupBox</string>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
-     <widget class="QPushButton" name="pushButton">
-      <property name="text">
-       <string>PushButton</string>
+     <widget class="QLineEdit" name="lineEdit_5_in_groupbox"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>200</y>
+     <width>173</width>
+     <height>86</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_3">
+    <item>
+     <widget class="QDoubleSpinBox" name="doubleSpinBox_3_in_myframe2"/>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_in_frame2">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
       </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_6"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QFrame" name="frame_3">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>10</y>
+     <width>173</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <layout class="QVBoxLayout" name="verticalLayout_6">
+    <item>
+     <widget class="QGroupBox" name="groupBox_in_frame3">
+      <property name="title">
+       <string>groupBox_in_frame3</string>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_10">
+       <item>
+        <widget class="QDoubleSpinBox" name="doubleSpinBox_4"/>
+       </item>
+      </layout>
      </widget>
     </item>
     <item>
-     <widget class="QLineEdit" name="lineEdit_3"/>
+     <widget class="QFrame" name="frame_in_frame3">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_7"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_2">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>150</y>
+     <width>171</width>
+     <height>150</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>groupBox_2</string>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout">
+    <item>
+     <layout class="QVBoxLayout" name="vLayout">
+      <item>
+       <widget class="QSpinBox" name="spinBox_2_in_groupbox"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox_3_in_groupbox"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox_4_in_groupbox"/>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="spinBox_5_in_groupbox"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QFrame" name="frame_in_groupbox2">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_8">
+       <item>
+        <widget class="QLineEdit" name="lineEdit_3"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_4"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_8"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="lineEdit_9"/>
+       </item>
+      </layout>
+     </widget>
     </item>
    </layout>
   </widget>
   <widget class="QWidget" name="gridLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>130</y>
-     <width>91</width>
-     <height>131</height>
+     <x>210</x>
+     <y>180</y>
+     <width>141</width>
+     <height>121</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
-     <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+     <widget class="QLineEdit" name="lineEdit_in_gridLayout"/>
     </item>
     <item row="1" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout">
+     <layout class="QHBoxLayout" name="hLayout">
       <item>
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QLineEdit" name="lineEdit_in_hLayout"/>
       </item>
      </layout>
     </item>
    </layout>
-  </widget>
-  <widget class="QWidget" name="verticalLayoutWidget_2">
-   <property name="geometry">
-    <rect>
-     <x>40</x>
-     <y>180</y>
-     <width>160</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <layout class="QVBoxLayout" name="verticalLayout">
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
-    </item>
-    <item>
-     <widget class="QDoubleSpinBox" name="doubleSpinBox_3"/>
-    </item>
-   </layout>
-  </widget>
-  <widget class="QWidget" name="formLayoutWidget">
-   <property name="geometry">
-    <rect>
-     <x>210</x>
-     <y>190</y>
-     <width>160</width>
-     <height>80</height>
-    </rect>
-   </property>
-   <layout class="QFormLayout" name="formLayout"/>
   </widget>
  </widget>
  <resources/>

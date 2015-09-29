@@ -11,11 +11,47 @@ import datetime
 
 class UiConfig(QtCore.QObject):
 
+    def config_init(self):
+        def set_timeEdit(value, conf):
+            mytime = time.strftime('%H:%M:%S', conf)
+            value.setTime(QtCore.QTime.fromString(mytime, "hh:mm:ss"))
+        def get_timeEdit(value):
+            time_str = value.time().toString("hh:mm:ss")
+            return time.strptime(time_str,'%H:%M:%S')
+        def get_dateEdit(value):
+            date_str = value.date().toString("yyyy/MM/dd")
+            return datetime.datetime.strptime(date_str,'%Y/%m/%d')
+        def get_datetimeEdit(value):
+            dt_str = value.dateTime().toString("yyyy/MM/dd hh:mm:ss")
+            return datetime.datetime.strptime(dt_str,'%Y/%m/%d %H:%M:%S')
+        self.config_function = {QtWidgets.QDoubleSpinBox:(QtWidgets.QDoubleSpinBox.value,0,
+                            QtWidgets.QDoubleSpinBox.setValue),
+                        QtWidgets.QSpinBox:(QtWidgets.QSpinBox.value,0,
+                            QtWidgets.QSpinBox.setValue),
+                        QtWidgets.QLineEdit:(QtWidgets.QLineEdit.text,'',
+                            QtWidgets.QLineEdit.setText),
+                        QtWidgets.QTextEdit:(QtWidgets.QTextEdit.toPlainText,'',
+                            QtWidgets.QTextEdit.setText),
+                        QtWidgets.QCheckBox:(QtWidgets.QCheckBox.isChecked,False,
+                            QtWidgets.QCheckBox.setChecked),
+                        QtWidgets.QRadioButton:(QtWidgets.QRadioButton.isChecked,False,
+                            QtWidgets.QRadioButton.setChecked),
+                        QtWidgets.QComboBox:(QtWidgets.QComboBox.currentIndex,0,
+                            QtWidgets.QComboBox.setCurrentIndex),
+                        QtWidgets.QTimeEdit:(get_timeEdit,time.time(),
+                            set_timeEdit),
+                        QtWidgets.QDateEdit:(get_dateEdit,datetime.datetime.today(),
+                            QtWidgets.QDateEdit.setDateTime),
+                        QtWidgets.QDateTimeEdit:(get_datetimeEdit,datetime.datetime.today(),
+                            QtWidgets.QDateTimeEdit.setDateTime)
+                        }
+ 
     def set_config(self, data):
         self.config_category = data.get('category', [])
         self.config_ignore = data.get('ignore', [])
 
     def keep_saving_config(self, timeout=1000):
+        self.config_init()
         try:
             self.config = self.read_config()
             # print(self.config)
@@ -30,66 +66,37 @@ class UiConfig(QtCore.QObject):
         if not mydata:
             return False
         data = mydata
-        # print(data)
-        for name, value in vars(self).items():
+        all_item = [(x[0], x[1]) for x in vars(self).items() if isinstance(x[1],QtCore.QObject)]
+        for name, value in all_item:
             key = name
             type_name = type(getattr(self, name))
-            # parent_name = self.get_parent_name(value)
+            parent_name = value.parent().objectName()
             if name in self.config_ignore:
-                print('name:%s'% name)
                 continue
             if type_name in self.config_ignore:
-                print('type_name:%s'% type_name)
                 continue
-            # if parent_name in self.config_ignore:
-            #     print('parent_name:%s'% parent_name)
-            #     continue
-            def get_value(key, data_dict):
+            if parent_name in self.config_ignore:
+                continue
+            def get_value_in_dict(key, data_dict):
                 '''get value in dict'''
                 if isinstance(data_dict, dict):
                     for x in data_dict:
                         if x == key:
                             return data_dict[x]
                         elif isinstance(data_dict[x], dict):
-                            tmp = get_value(key, data_dict[x])
+                            tmp = get_value_in_dict(key, data_dict[x])
                             if tmp:return tmp
                             else: continue
-            if type_name == QtWidgets.QDoubleSpinBox:
-                conf = get_value(key, data)
-                value.setValue(conf)
-            if type_name == QtWidgets.QLineEdit:
-                conf = get_value(key, data)
-                value.setText(conf)
-            if type_name == QtWidgets.QTextEdit:
-                conf = get_value(key, data)
-                value.setText(conf)
-            if type_name == QtWidgets.QCheckBox:
-                conf = get_value(key, data)
-                value.setChecked(conf)
-            if type_name == QtWidgets.QTimeEdit:
-                conf = get_value(key, data)
-                mytime = time.strftime('%H:%M:%S', conf)
-                value.setTime(QtCore.QTime.fromString(mytime, "hh:mm:ss"))
-            if type_name == QtWidgets.QDateEdit:
-                conf = get_value(key, data)
-                value.setDateTime(conf)
-            if type_name == QtWidgets.QDateTimeEdit:
-                conf = get_value(key, data)
-                value.setDateTime(conf)
-            if type_name == QtWidgets.QRadioButton:
-                conf = get_value(key, data)
-                value.setChecked(conf)
-            if type_name == QtWidgets.QComboBox:
-                conf = get_value(key, data)
-                value.setCurrentIndex(conf)
-            if type_name == QtWidgets.QSpinBox:
-                conf = get_value(key, data)
-                data.setdefault(key, value.setValue(conf))
-            if type_name == QtWidgets.QDoubleSpinBox:
-                conf = get_value(key, data)
-                data.setdefault(key, value.setValue(conf))
-
+            conf = get_value_in_dict(key, data)
+            def set_value(Qobject, value):
+                type_name = type(Qobject)
+                if type_name in self.config_function:
+                    if not value:value = self.config_function[type_name][1]
+                    data_value = self.config_function[type_name][2](Qobject, value)
+            set_value(value, conf)
     def get_parent_name(self, obj):
+        if not isinstance(obj, QtCore.QObject):
+            return 'Not QObject'
         layout_list = [QtWidgets.QVBoxLayout,
                 QtWidgets.QHBoxLayout,QtWidgets.QGridLayout,QtWidgets.QFormLayout]
         parent = obj.parent()
@@ -101,35 +108,13 @@ class UiConfig(QtCore.QObject):
         return parent.objectName()
 
     def get_config(self):
-        data = {}
-        for name, value in vars(self).items():
-            key = name
-            type_name = type(getattr(self, name))
-            if type_name == QtWidgets.QDoubleSpinBox:
-                data[key] = value.value()
-            if type_name == QtWidgets.QLineEdit:
-                data[key] = value.text()
-            if type_name == QtWidgets.QTextEdit:
-                data.setdefault(key,value.toPlainText())
-            if type_name == QtWidgets.QCheckBox:
-                data[key] = value.isChecked()
-            if type_name == QtWidgets.QTimeEdit:
-                time_str = value.time().toString("hh:mm:ss")
-                data[key] = time.strptime(time_str,'%H:%M:%S')
-            if type_name == QtWidgets.QDateEdit:
-                date_str = value.date().toString("yyyy/MM/dd")
-                data[key] = datetime.datetime.strptime(date_str,'%Y/%m/%d')
-            if type_name == QtWidgets.QDateTimeEdit:
-                dt_str = value.dateTime().toString("yyyy/MM/dd hh:mm:ss")
-                data[key] = datetime.datetime.strptime(dt_str,'%Y/%m/%d %H:%M:%S')
-            if type_name == QtWidgets.QRadioButton:
-                data[key] = value.isChecked()
-            if type_name == QtWidgets.QComboBox:
-                data[key] = value.currentIndex()
-            if type_name == QtWidgets.QSpinBox:
-                data[key] = value.value()
-            if type_name == QtWidgets.QDoubleSpinBox:
-                data[key] = value.value()
+        def get_value(Qobject):
+            type_name = type(Qobject)
+            if not type_name in self.config_function:
+                return None
+            else:
+                data_value = self.config_function[type_name][0](Qobject)
+                return data_value if data_value else self.config_function[type_name][1]
         def tree_dict(data):
             widgets = list(tuple(data))
             for widget in widgets:
@@ -141,6 +126,11 @@ class UiConfig(QtCore.QObject):
                     else:
                         data[parent_name] = {widget:data.pop(widget)}
             return data
+        data = {}
+        all_item = [(x[0], x[1]) for x in vars(self).items() if isinstance(x[1],QtCore.QObject)]
+        for name, value in all_item:
+            data_value = get_value(value)
+            if data_value: data[name] = data_value
         return tree_dict(data)
     
     def save_config(self, data = None, path = None):
@@ -173,12 +163,17 @@ if __name__ == '__main__':
         def __init__(self):
             super(Example, self).__init__()
             self.setupUi(self)
-            self.set_config({'category':['myframe','Layout','gridLayout'],
-                             'ignore':['lineEdit', QtWidgets.QTextEdit]})
+            self.set_config({'category':['myframe',
+                                         'groupBox_2','vLayout','frame_in_groupbox2',
+                                         'gridLayout',
+                                         'hLayout' # this doesn't work, the same as vLayout
+                                         ],
+                             'ignore':['lineEdit','groupBox', QtWidgets.QTextEdit]})
             self.keep_saving_config(1000)
     app = QtWidgets.QApplication(sys.argv)
     ex = Example()
     ex.show()
-    print('self.config:%s' % ex.config)
+    import pprint
+    pprint.pprint('self.config:%s' % ex.config)
     sys.exit(app.exec_())
 
