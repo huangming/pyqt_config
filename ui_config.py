@@ -94,6 +94,7 @@ class UiConfig(QtCore.QObject):
                     if not value:value = self.config_function[type_name][1]
                     data_value = self.config_function[type_name][2](Qobject, value)
             set_value(value, conf)
+
     def get_parent_name(self, obj):
         if not isinstance(obj, QtCore.QObject):
             return 'Not QObject'
@@ -117,8 +118,12 @@ class UiConfig(QtCore.QObject):
                 return data_value if data_value else self.config_function[type_name][1]
         def tree_dict(data):
             widgets = list(tuple(data))
+            layout_list = [QtWidgets.QVBoxLayout,
+                    QtWidgets.QHBoxLayout,QtWidgets.QGridLayout,QtWidgets.QFormLayout]
             for widget in widgets:
                 tmp_obj = getattr(self, widget)
+                if type(tmp_obj) in layout_list:
+                    continue
                 parent_name = self.get_parent_name(tmp_obj)
                 if parent_name in self.config_category:
                     if parent_name in data:
@@ -131,6 +136,8 @@ class UiConfig(QtCore.QObject):
         for name, value in all_item:
             data_value = get_value(value)
             if data_value: data[name] = data_value
+        for i in range(len(all_item)):
+            data = tree_dict(data)
         return tree_dict(data)
     
     def save_config(self, data = None, path = None):
