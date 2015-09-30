@@ -1,6 +1,6 @@
 # QuickStart
 
-1. Put ui_config.py in your program dir and import the class.
+1. Put ui_config.py in your program dir.
 2. Import the class UiConfig and inherited in your class.
 3. Add line 'self.set_config(your_config_dict)' after self.setupUi() if needed.
 4. Add line 'self.keep_saving_config()' after self.setupUi().
@@ -9,7 +9,12 @@ That's all
 
 Example:
 
+In your program example.py:
+
+    \#!/usr/bin/env python
+    \# -*- coding: utf-8 -*-
     from Ui_ui_config import Ui_Dialog
+    from ui_config import UiConfig
     class Example(QtWidgets.QWidget, Ui_Dialog, UiConfig):
         def __init__(self):
             super(Example, self).__init__()
