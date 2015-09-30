@@ -138,7 +138,7 @@ class UiConfig(QtCore.QObject):
             if data_value: data[name] = data_value
         for i in range(len(all_item)):
             data = tree_dict(data)
-        return tree_dict(data)
+        return data
     
     def save_config(self, data = None, path = None):
         if path == None:
@@ -171,8 +171,9 @@ if __name__ == '__main__':
             super(Example, self).__init__()
             self.setupUi(self)
             self.set_config({'category':['myframe',
+                                         'frame3','groupBox_in_frame3','frame_in_frame3',
                                          'groupBox_2','vLayout','frame_in_groupbox2',
-                                         'gridLayout',
+                                         'gridLayout',# this works,see readme.
                                          'hLayout' # this doesn't work, the same as vLayout
                                          ],
                              'ignore':['lineEdit','groupBox', QtWidgets.QTextEdit]})
@@ -182,5 +183,6 @@ if __name__ == '__main__':
     ex.show()
     import pprint
     pprint.pprint('self.config:%s' % ex.config)
+    print(ex.groupBox_in_frame3.parent().objectName())
     sys.exit(app.exec_())
 

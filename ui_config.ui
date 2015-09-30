@@ -235,7 +235,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QFrame" name="frame_3">
+  <widget class="QFrame" name="frame3">
    <property name="geometry">
     <rect>
      <x>370</x>
