@@ -1,9 +1,11 @@
 # QuickStart
 
-- Put ui_config.py in your program dir and import the class.
-- Import the class UiConfig and inherited in your class.
-- Add line 'self.set_config(your_config_dict)' after self.setupUi() if needed.
-- Add line 'self.keep_saving_config()' after self.setupUi().
+1. Put ui_config.py in your program dir and import the class.
+2. Import the class UiConfig and inherited in your class.
+3. Add line 'self.set_config(your_config_dict)' after self.setupUi() if needed.
+4. Add line 'self.keep_saving_config()' after self.setupUi().
+
+That's all
 
 Example:
 
@@ -26,8 +28,6 @@ Example:
     import pprint
     pprint.pprint('self.config:%s' % ex.config)
     sys.exit(app.exec_())
-
-That's all
 
 # Settings
 
@@ -68,7 +68,7 @@ then restart the program.We got a dict:
                             'doubleSpinBox_in_myframe':2.0,
                             'lineEdit_2_in_myframe':'sdf23'}}
 
-Parameter in  function self.keep_saving_config(1000) control the frequency of updates on self.config
+Parameter in  function self.keep_saving_config(1000) control the frequency of updates on self.config.
 
 # Notice
 
