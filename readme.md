@@ -1,9 +1,31 @@
 # QuickStart
 
-Just see the example in ui_config.
+- Put ui_config.py in your program dir and import the class.
 - Import the class UiConfig and inherited in your class.
 - Add line 'self.set_config(your_config_dict)' after self.setupUi() if needed.
 - Add line 'self.keep_saving_config()' after self.setupUi().
+
+Example:
+
+    from Ui_ui_config import Ui_Dialog
+    class Example(QtWidgets.QWidget, Ui_Dialog, UiConfig):
+        def __init__(self):
+            super(Example, self).__init__()
+            self.setupUi(self)
+            self.set_config({'category':['myframe',
+                                         'frame3','groupBox_in_frame3','frame_in_frame3',
+                                         'groupBox_2','vLayout','frame_in_groupbox2',
+                                         'gridLayout',# this works,see notice
+                                         'hLayout' # this doesn't work, the same as vLayout
+                                         ],
+                             'ignore':['lineEdit','groupBox', QtWidgets.QTextEdit]})
+            self.keep_saving_config(1000)
+    app = QtWidgets.QApplication(sys.argv)
+    ex = Example()
+    ex.show()
+    import pprint
+    pprint.pprint('self.config:%s' % ex.config)
+    sys.exit(app.exec_())
 
 That's all
 
@@ -13,15 +35,7 @@ That's all
 - Items in ignore can't be loaded to interface when program start.
 - We can add varname,QObject_style,category_name in ignore dict.
 
-As an example:
-
-    self.set_config({'category':['myframe',
-                                 'frame3','groupBox_in_frame3','frame_in_frame3',
-                                 'groupBox_2','vLayout','frame_in_groupbox2',
-                                 'gridLayout',# this works,see readme.
-                                 'hLayout' # this doesn't work, the same as vLayout
-                                 ],
-                     'ignore':['lineEdit','groupBox', QtWidgets.QTextEdit]})
+As the example
  
 Start the program and set some value:
 

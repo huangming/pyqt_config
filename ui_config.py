@@ -183,6 +183,5 @@ if __name__ == '__main__':
     ex.show()
     import pprint
     pprint.pprint('self.config:%s' % ex.config)
-    print(ex.groupBox_in_frame3.parent().objectName())
     sys.exit(app.exec_())
 
