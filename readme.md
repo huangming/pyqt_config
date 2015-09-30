@@ -1,13 +1,18 @@
 # QuickStart
+
 Just see the example in ui_config.
 - Import the class UiConfig and inherited in your class.
 - Add line 'self.set_config(your_config_dict)' after self.setupUi() if needed.
 - Add line 'self.keep_saving_config()' after self.setupUi().
+
 That's all
+
 # Settings
+
 - Items in category can be collected in a dict,it should be a name of a container widget or layout.
 - Items in ignore can't be loaded to interface when program start.
 - We can add varname,QObject_style,category_name in ignore dict.
+
 As an example:
 
     self.set_config({'category':['myframe',
@@ -19,7 +24,9 @@ As an example:
                      'ignore':['lineEdit','groupBox', QtWidgets.QTextEdit]})
  
 Start the program and set some value:
+
 ![settings][1]
+
 then restart the program.We got a dict:
 
     self.config:{'gridLayout':{'lineEdit_in_hLayout':'dfas23f','lineEdit_in_gridLayout':'sfdwer'},
@@ -48,6 +55,8 @@ then restart the program.We got a dict:
                             'lineEdit_2_in_myframe':'sdf23'}}
 
 Parameter in  function self.keep_saving_config(1000) control the frequency of updates on self.config
+
+# Notice
 
 If the type of category is Layout(Vertical,Horizontal,Grid,Form),only the outermost one can work.In the example,only gridLayout works.
 
