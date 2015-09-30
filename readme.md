@@ -51,4 +51,4 @@ Parameter in  function self.keep_saving_config(1000) control the frequency of up
 
 If the type of category is Layout(Vertical,Horizontal,Grid,Form),only the outermost one can work.In the example,only gridLayout works.
 
-[1]: /source/201509301.jpg
+[1]: /201509301.jpg
