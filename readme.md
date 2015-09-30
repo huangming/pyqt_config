@@ -11,8 +11,8 @@ Example:
 
 In your program example.py:
 
-    \#!/usr/bin/env python
-    \# -*- coding: utf-8 -*-
+    #!/usr/bin/env python
+    # -*- coding: utf-8 -*-
     from Ui_ui_config import Ui_Dialog
     from ui_config import UiConfig
     class Example(QtWidgets.QWidget, Ui_Dialog, UiConfig):
